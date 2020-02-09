@@ -1,0 +1,41 @@
+{
+  "presets": [["@babel/preset-env", { "targets": { "node": "current" } }]],
+  "plugins": [
+    "react-hot-loader/babel",
+    "@babel/plugin-transform-react-jsx",
+    "@babel/plugin-syntax-dynamic-import",
+    [
+      "react-css-modules",
+      {
+        "generateScopedName": "[path]-[local]-[hash:base64:5]",
+        "exclude": "node_modules",
+        "handleMissingStyleName": "warn",
+        "webpackHotModuleReloading": true,
+        "filetypes": {
+          ".less": {
+            "syntax": "postcss-less"
+          }
+        }
+      }
+    ],
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "es",
+        "style": "css"
+      },
+      "ant"
+    ],
+    [
+      "import",
+      {
+        "libraryName": "ant-design-pro",
+        "libraryDirectory": "lib",
+        "style": "css",
+        "camel2DashComponentName": false
+      },
+      "ant-design-pro"
+    ]
+  ]
+}

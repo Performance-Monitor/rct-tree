@@ -1,0 +1,104 @@
+.tree-node-wrapper {
+    display        : flex;
+    flex-direction : row;
+    height         : 2rem;
+    justify-content: space-between;
+    cursor         : pointer;
+}
+
+.tree-node-left {
+    display       : flex;
+    flex-direction: row;
+    align-items   : center;
+    position      : relative;
+    left          : 1rem;
+}
+
+.tree-node {
+    display        : flex;
+    flex-direction : row;
+    align-items    : center;
+    justify-content: center;
+    margin-left    : .3rem;
+}
+
+
+.tree-node-left-title {
+    background-color: rgba(196, 222, 248, .35);
+    box-shadow      : 0 0px 3px #8d858556;
+    border-radius   : 2px;
+}
+
+.tree-node-left-checkbox {
+    position: relative;
+    left    : .15rem;
+}
+
+.tree-node-left-checkbox-disabled {
+    cursor: not-allowed;
+}
+
+.tree-node-left-item-disabled {
+    pointer-events: none; // css 的方式禁用 dom 的点击事件, 但是会导致上面设置的 cursor 不生效
+}
+
+.tree-node-right {
+    display: none;
+}
+
+.tree-node-wrapper:hover>.tree-node-right {
+    display       : flex;
+    flex-direction: row;
+    align-items   : center;
+    position      : relative;
+    right         : 1rem;
+}
+
+.arrow-right {
+    height: 1rem;
+}
+
+.arrow-down {
+    height    : 1rem;
+    transform : rotate(90deg);
+    transition: .3s;
+}
+
+.tree-node-img {
+    height     : 1rem;
+    width      : 1rem;
+    line-height: 1rem;
+}
+
+.tree-node-img-editable {
+    height: 1.25rem;
+    width : 1.25rem;
+}
+
+.rct-icon-star {
+    background     : url('../assets//images/icons/star.svg');
+    width          : 1rem;
+    height         : 1rem;
+    background-size: 100%;
+}
+
+.rct-icon-file {
+    background     : url('../assets//images//icons/file.svg');
+    width          : 1rem;
+    height         : 1rem;
+    background-size: 100%;
+}
+
+.rct-icon-directory {
+    background     : url('../assets//images//icons/directory.svg');
+    width          : 1rem;
+    height         : 1rem;
+    background-size: 100%;
+}
+
+.rct-icon-tag {
+    background     : url('../assets//images/icons/tag.svg');
+    width          : 1rem;
+    height         : 1rem;
+    background-size: 100%;
+}

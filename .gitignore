@@ -1,0 +1,7 @@
+node_modules/*
+dist/*
+.idea/
+.cache/
+.vscode/
+package-lock.json
+yarn.lock
