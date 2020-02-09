@@ -1,24 +1,22 @@
 ## `rct-tree`
 A tree component based on ReactJS and Typescript.
 
-### `Install`
-recommend to use yarn
+[![NPM version](https://img.shields.io/npm/v/rct-tree.svg)](https://www.npmjs.com/package/rct-tree)
+
+## `Installation`
 ```
-npm install
+npm i rct-tree
+```  
+or use
 ```
-or
-```
-yarn install
+yarn add rct-tree
 ```
 
-### `Run`
-```
-npm run dev
-```
-or
-```
-yarn run dev
-```
+### `Development`
+Recommend to use yarn to start the project:
++ `yarn install`
++ `yarn run dev`
+
 
 ### `Demo`
 Here is a complex example while you try to use this component.
