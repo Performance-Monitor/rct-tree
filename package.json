@@ -1,6 +1,6 @@
 {
   "name": "rct-tree",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tree component based on ReactJS and Typescript.",
   "main": "index.tsx",
   "scripts": {
