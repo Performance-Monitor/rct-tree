@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { HashRouter, Redirect, Route, Switch, withRouter } from 'react-router-dom'
+import { HashRouter as Router, Redirect, Route, Switch, withRouter } from 'react-router-dom'
 import { hot } from 'react-hot-loader/root'
 
 import PageLoading from './../components/PageLoading'
@@ -19,12 +19,6 @@ try {
 class SwitchRouterComponent extends React.Component<any, any> {
   constructor(props: any) {
     super(props)
-  }
-
-  public componentDidUpdate(prevProps: any) {
-    if (this.props.location !== prevProps.location) {
-      console.log('>>> Router Change: ', this.props.location)
-    }
   }
 
   public render() {
@@ -53,9 +47,9 @@ class RouterComponent extends React.Component<any, any> {
 
   public render() {
     return (
-      <HashRouter>
+      <Router>
         <WithRouterComponent />
-      </HashRouter>
+      </Router>
     )
   }
 }

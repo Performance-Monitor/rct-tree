@@ -1,5 +1,3 @@
-var os = require('os')
-var path = require('path')
 var merge = require('webpack-merge')
 var TerserPlugin = require('terser-webpack-plugin')
 var MiniCssExtractPlugin = require('mini-css-extract-plugin')

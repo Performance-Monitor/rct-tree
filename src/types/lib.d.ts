@@ -1,5 +1,3 @@
-declare module 'sa-sdk-javascript'
-
 declare module '*.svg' {
   const content: any
   export default content

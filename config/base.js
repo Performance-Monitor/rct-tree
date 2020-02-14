@@ -1,7 +1,7 @@
 var path = require('path')
 
 module.exports = {
-  title: 'react-tree-component',
+  title: 'RCT TREE',
   projectName: 'ninth-studio-mobile',
   assetsPublicPath: '',
   assetsSubDirectory: 'static',
