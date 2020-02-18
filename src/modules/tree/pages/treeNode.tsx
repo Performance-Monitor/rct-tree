@@ -1,6 +1,6 @@
 import * as React from 'react'
 import '../style/treeNode.less'
-import { Common, Operation } from '../assets'
+import { Common } from '../assets'
 
 import { ITreeNodeParams } from '../lib/type'
 
@@ -10,16 +10,9 @@ const {
     CheckBoxUnmarked,                           //  checkbox 未被选中的图标
     CheckBoxDisabledMarked,                     //  checkbox 被禁用且被选中的图标
     CheckBoxDisabledUnmarked,                   //  checkbox 被禁用且未被选中的图标
-    CheckBoxHalfMarked,                        //  checkbox 为半选状态的图标
+    CheckBoxHalfMarked,                         //  checkbox 为半选状态的图标
     CheckBoxDisabledHalfMarked
 } = Common
-
-const {
-    Create,                                     //  新增图标
-    Delete,                                     //  删除图标
-    Edit                                        //  编辑图标
-} = Operation
-
 /**
  * @description TreeNode TreeNode 表示某一个节点
  * @author jazzyXie
@@ -29,9 +22,9 @@ export default class TreeNode extends React.Component<ITreeNodeParams>{
         super(props)
     }
     public render() {
-        const { currentNode, showIcon, creatable, editable, removable } = this.props
+        const { currentNode, showIcon } = this.props
         if (currentNode) {
-            const { title, expand, selected, disabled } = currentNode
+            const { title, selected, disabled } = currentNode
             return (
                 <div>
                     <div styleName="tree-node-wrapper">
@@ -46,68 +39,7 @@ export default class TreeNode extends React.Component<ITreeNodeParams>{
                                 <span style={showIcon ? { paddingLeft: '.3rem' } : {}}>{title}</span>
                             </div>
                         </div>
-                        <div styleName="tree-node-right">
-                            {editable ? <img styleName="tree-node-img-editable" onClick={this.handleEdit} src={Edit} alt="edit" /> : ""}
-                            {creatable ? <img styleName="tree-node-img-editable" onClick={this.handleCreate} src={Create} alt="create" /> : ""}
-                            {removable ? <img styleName="tree-node-img-editable" onClick={this.handleDelete} src={Delete} alt="delete" /> : ""}
-                        </div>
                     </div>
-                    {expand ? this.renderChildNodes() : ""}
-                </div>
-            )
-        }
-    }
-    public renderChildNodes = () => {
-        const {
-            currentNode,
-            config,
-            icons,
-            editable,
-            creatable,
-            removable,
-            checkLeaf,
-            onToggleExpand,
-            showCheckBox,
-            showIcon,
-            onCreate,
-            onDelete,
-            onEdit,
-            onSelect,
-            onCheck,
-        } = this.props
-        if (currentNode && currentNode.children && currentNode.children.length) {
-            // 当节点有子节点时，传入子节点的布局配置
-            const childrenNodeStyle = config ? config : { paddingLeft: '1rem' }
-            return (
-                <div
-                    style={childrenNodeStyle}
-                >
-                    {
-                        currentNode.children.map((child: ITreeNodeParams) => {
-                            const { id } = child
-                            return (
-                                
-                                <TreeNode
-                                    key={`tree-node-${id}`}
-                                    currentNode={child}
-                                    config={config}
-                                    icons={icons}
-                                    editable={editable}
-                                    creatable={creatable}
-                                    removable={removable}
-                                    checkLeaf={checkLeaf}
-                                    onToggleExpand={onToggleExpand}
-                                    showCheckBox={showCheckBox}
-                                    showIcon={showIcon}
-                                    onCreate={onCreate}
-                                    onDelete={onDelete}
-                                    onEdit={onEdit}
-                                    onCheck={onCheck}
-                                    onSelect={onSelect}
-                                />
-                            )
-                        })
-                    }
                 </div>
             )
         }
@@ -133,8 +65,7 @@ export default class TreeNode extends React.Component<ITreeNodeParams>{
                 width: '1rem'
             }
             return (
-                
-                <div style={placeholder}/>
+                <div style={placeholder} />
             )
         }
     }
@@ -190,8 +121,8 @@ export default class TreeNode extends React.Component<ITreeNodeParams>{
                         }
                     } else {
                         // 默认配置
-                        const parent =  <span styleName="rct-icon-directory"/>,
-                            leaf =  <span styleName="rct-icon-file"/>
+                        const parent = <span styleName="rct-icon-directory" />,
+                            leaf = <span styleName="rct-icon-file" />
                         if (checkLeaf(id)) {
                             return parent
                         } else if (!checkLeaf(id)) {
@@ -232,42 +163,6 @@ export default class TreeNode extends React.Component<ITreeNodeParams>{
             const { id } = currentNode
             if (id) {
                 onSelect(id)
-            }
-        }
-    }
-    /**
-     * @description 传递给父组件 Tree 去编辑节点
-     */
-    public handleEdit = () => {
-        const { currentNode, onEdit } = this.props
-        if (onEdit && currentNode) {
-            const { id } = currentNode
-            if (id) {
-                onEdit(id)
-            }
-        }
-    }
-    /**
-     * @description 传递给父组件 Tree 去新增节点
-     */
-    public handleCreate = () => {
-        const { currentNode, onCreate } = this.props
-        if (onCreate && currentNode) {
-            const { id } = currentNode
-            if (id) {
-                onCreate(id)
-            }
-        }
-    }
-    /**
-     * @description 传递给父组件 Tree 去删除节点
-     */
-    public handleDelete = () => {
-        const { currentNode, onDelete } = this.props
-        if (onDelete && currentNode) {
-            const { id } = currentNode
-            if (id) {
-                onDelete(id)
             }
         }
     }
