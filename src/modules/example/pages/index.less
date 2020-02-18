@@ -1,22 +1,27 @@
 .example-wrapper {
-    display       : flex;
-    flex-direction: row;
+    display        : flex;
+    flex-direction : row;
+    justify-content: center;
+    align-items    : center;
+    height         : 100vh;
 }
 
 .example-tree {
-    width: 500px;
+    width          : 240px;
+    display        : flex;
+    flex-direction : row;
+    justify-content: center;
+    border         : 1px solid #96C2F1
 }
 
 .example-controller {
-    display       : flex;
-    flex-direction: column;
-    width         : calc(100% - 500px);
-    padding       : 100px 20px 0 20px;
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
 }
 
 .example-controller-button {
     margin       : 5px 50px;
-    width        : 200px;
     font-size    : .75rem;
     border-radius: 5px;
 }

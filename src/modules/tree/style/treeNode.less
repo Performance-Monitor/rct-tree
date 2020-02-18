@@ -1,17 +1,9 @@
 .tree-node-wrapper {
-    display        : flex;
-    flex-direction : row;
-    height         : 32px;
-    justify-content: space-between;
-    cursor         : pointer;
-}
-
-.tree-node-left {
     display       : flex;
     flex-direction: row;
+    height        : 32px;
     align-items   : center;
-    position      : relative;
-    left          : 16px;
+    cursor        : pointer;
 }
 
 .tree-node {
@@ -21,7 +13,6 @@
     justify-content: center;
     margin-left    : 5px;
 }
-
 
 .tree-node-left-title {
     background-color: rgba(196, 222, 248, .35);
@@ -42,18 +33,6 @@
     pointer-events: none; // css 的方式禁用 dom 的点击事件, 但是会导致上面设置的 cursor 不生效
 }
 
-.tree-node-right {
-    display: none;
-}
-
-.tree-node-wrapper:hover>.tree-node-right {
-    display       : flex;
-    flex-direction: row;
-    align-items   : center;
-    position      : relative;
-    right         : 16px;
-}
-
 .arrow-right {
     height: 16px;
 }
@@ -67,12 +46,6 @@
 .tree-node-img {
     height     : 16px;
     width      : 16px;
-    line-height: 16px;
-}
-
-.tree-node-img-editable {
-    height: 20px;
-    width : 20px;
 }
 
 .rct-icon-star {

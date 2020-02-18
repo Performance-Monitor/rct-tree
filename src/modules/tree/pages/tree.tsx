@@ -54,7 +54,6 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
       let { treeConstructor, visibleData: preData, startIndex: preStartIndex, endIndex: preEndIndex } = this.state
       const { flatData } = treeConstructor
       scrollTop = scrollTop || 0
-      rowHeight = rowHeight || defaultProps.rowHeight
       const visibleCount = Math.ceil(height / (rowHeight || defaultProps.rowHeight))
       const startIndex = Math.floor(scrollTop / (rowHeight || defaultProps.rowHeight))
       const endIndex = startIndex + visibleCount
@@ -84,7 +83,7 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
   public render() {
     const { config, showCheckBox, placeholder, showIcon, icons, rowHeight, height } = this.props
     const { treeConstructor, visibleData } = this.state
-    const { flatData, getNodeByID, childList } = treeConstructor
+    const { flatData } = treeConstructor
     if (!flatData || flatData.length == 0) {
       const placeholderContent = placeholder ? placeholder : '暂无数据'
       return <div styleName="tree-wrapper">{placeholderContent}</div>
@@ -97,11 +96,11 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
         style={{ height }}
       >
         <div style={{ height: this.getContentHeight() }}></div>
-        <div ref={ref => (this.treeNodes = ref)} style={{ position: "absolute", left: 0, top: 0 }}>
+        <div ref={ref => (this.treeNodes = ref)} style={{ position: "absolute",top: 0 }}>
           {visibleData.map((node: ITreeNodeParams) => {
             const { id, index } = node
             return (
-              <div style={index ? { paddingLeft: 10 * index, height: (rowHeight || defaultProps.rowHeight) } : { height: (rowHeight || defaultProps.rowHeight) }} key={`tree—node-${id}`}>
+              <div style={index ? { paddingLeft: (rowHeight || defaultProps.rowHeight) / 2 * index, height: (rowHeight || defaultProps.rowHeight) } : { height: (rowHeight || defaultProps.rowHeight) }} key={`tree—node-${id}`}>
                 <TreeNode
                   treeConstructor={treeConstructor}
                   currentNode={node}

@@ -5,12 +5,19 @@ import { Common } from '../assets'
 import { ITreeNodeParams } from '../lib/type'
 
 const {
-    Arrow,                                      //  展开/收缩图标
-    CheckBoxMarked,                             //  checkbox 被选中的图标
-    CheckBoxUnmarked,                           //  checkbox 未被选中的图标
-    CheckBoxDisabledMarked,                     //  checkbox 被禁用且被选中的图标
-    CheckBoxDisabledUnmarked,                   //  checkbox 被禁用且未被选中的图标
-    CheckBoxHalfMarked,                         //  checkbox 为半选状态的图标
+    //  展开 / 收缩图标
+    Arrow,
+    //  checkbox 被选中的图标
+    CheckBoxMarked,
+    //  checkbox 未被选中的图标                          
+    CheckBoxUnmarked,
+    //  checkbox 被禁用且被选中的图标                          
+    CheckBoxDisabledMarked,
+    //  checkbox 被禁用且未被选中的图标                  
+    CheckBoxDisabledUnmarked,
+    //  checkbox 为半选状态的图标                
+    CheckBoxHalfMarked,
+    //  checkbox 被禁用且为半选状态的图标                      
     CheckBoxDisabledHalfMarked
 } = Common
 /**
@@ -26,19 +33,15 @@ export default class TreeNode extends React.Component<ITreeNodeParams>{
         if (currentNode) {
             const { title, selected, disabled } = currentNode
             return (
-                <div>
-                    <div styleName="tree-node-wrapper">
-                        <div styleName="tree-node-left">
-                            {this.renderCollapse()}
-                            {this.renderCheckBox()}
-                            <div
-                                styleName={`tree-node ${selected ? "tree-node-left-title" : ""} ${disabled ? "tree-node-left-item-disabled" : ""}`}
-                                onClick={this.handleSelect}
-                            >
-                                {showIcon ? this.renderIcon() : ""}
-                                <span style={showIcon ? { paddingLeft: '.3rem' } : {}}>{title}</span>
-                            </div>
-                        </div>
+                <div styleName="tree-node-wrapper">
+                    {this.renderCollapse()}
+                    {this.renderCheckBox()}
+                    <div
+                        styleName={`tree-node ${selected ? "tree-node-left-title" : ""} ${disabled ? "tree-node-left-item-disabled" : ""}`}
+                        onClick={this.handleSelect}
+                    >
+                        {showIcon ? this.renderIcon() : ""}
+                        <span style={showIcon ? { paddingLeft: '.3rem' } : {}}>{title}</span>
                     </div>
                 </div>
             )
@@ -98,7 +101,7 @@ export default class TreeNode extends React.Component<ITreeNodeParams>{
     /**
      * @description 控制 icon 的渲染
     */
-    public renderIcon() {
+    private renderIcon() {
         const {
             showIcon,
             currentNode,
@@ -136,7 +139,7 @@ export default class TreeNode extends React.Component<ITreeNodeParams>{
     /**
      * @description 传递给父组件 Tree 去控制组件的展开/收缩
      */
-    public handleCollapse = () => {
+    private handleCollapse = () => {
         const { currentNode, onToggleExpand } = this.props
         if (onToggleExpand && currentNode) {
             const { id } = currentNode
@@ -148,7 +151,7 @@ export default class TreeNode extends React.Component<ITreeNodeParams>{
     /**
      * @description 传递给父组件 Tree 去修改 checkbox checked 的状态
      */
-    public handleCheck = () => {
+    private handleCheck = () => {
         const { currentNode, onCheck } = this.props
         if (onCheck && currentNode) {
             const { id } = currentNode
@@ -157,7 +160,7 @@ export default class TreeNode extends React.Component<ITreeNodeParams>{
             }
         }
     }
-    public handleSelect = () => {
+    private handleSelect = () => {
         const { currentNode, onSelect } = this.props
         if (onSelect && currentNode) {
             const { id } = currentNode

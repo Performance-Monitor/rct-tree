@@ -196,9 +196,6 @@ export default class Test extends React.Component<IProps, IState> {
       showIcon: true,
       autoExpandAll: true,
       autoCollapseAll: false,
-      editable: true,
-      creatable: true,
-      removable: true,
       multiple: true
     }
   }
@@ -215,9 +212,6 @@ export default class Test extends React.Component<IProps, IState> {
       showIcon,
       autoExpandAll,
       autoCollapseAll,
-      editable,
-      creatable,
-      removable,
       multiple
     } = this.state
     return (
@@ -226,7 +220,7 @@ export default class Test extends React.Component<IProps, IState> {
           <RctTree
             ref={this.onRef} //  获取 Tree 这个构造类
             rowHeight={32}
-            height={480}
+            height={320}
             treeData={treeData}
             showCheckBox={showCheckBox}
             showIcon={showIcon}
