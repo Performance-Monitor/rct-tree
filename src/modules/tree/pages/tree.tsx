@@ -49,6 +49,7 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
     this.updateVisibleData(scrollTop)
   }
   private updateVisibleData = (scrollTop?: number) => {
+    //  使用requestAnimationFrame改善触发onScroll事件活跃造成的闪烁问题
     requestAnimationFrame(() => {
       let { height, rowHeight } = this.props
       let { treeConstructor, visibleData: preData, startIndex: preStartIndex, endIndex: preEndIndex } = this.state
