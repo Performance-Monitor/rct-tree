@@ -134,7 +134,7 @@ class Tree {
   toggleLinkage = (currentNode: ITreeNodeParams) => {
     let childList: any = []
     function pushNode(node: ITreeNodeParams) {
-      node.children.forEach((el: any) => {
+      node && node.children && node.children.forEach((el: any) => {
         childList.push(el.id)
         if (el.children && el.children.length) {
           pushNode(el)

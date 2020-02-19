@@ -81,7 +81,7 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
     return contentHeight
   }
   public render() {
-    const { config, showCheckBox, placeholder, showIcon, icons, rowHeight, height } = this.props
+    const { showCheckBox, placeholder, showIcon, icon, rowHeight, height } = this.props
     const { treeConstructor, visibleData } = this.state
     const { flatData } = treeConstructor
     if (!flatData || flatData.length == 0) {
@@ -93,21 +93,19 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
         styleName="tree-wrapper"
         ref={ref => (this.rctTree = ref)}
         onScroll={this.onScroll.bind(this)}
-        style={{ height }}
+        style={height ? { height } : {}}
       >
         <div style={{ height: this.getContentHeight() }}></div>
-        <div ref={ref => (this.treeNodes = ref)} style={{ position: "absolute",top: 0 }}>
+        <div ref={ref => (this.treeNodes = ref)} style={{ position: "absolute", top: 0 }}>
           {visibleData.map((node: ITreeNodeParams) => {
             const { id, index } = node
             return (
               <div style={index ? { paddingLeft: (rowHeight || defaultProps.rowHeight) / 2 * index, height: (rowHeight || defaultProps.rowHeight) } : { height: (rowHeight || defaultProps.rowHeight) }} key={`tree—node-${id}`}>
                 <TreeNode
-                  treeConstructor={treeConstructor}
                   currentNode={node}
-                  config={config}
                   showCheckBox={showCheckBox}
                   showIcon={showIcon}
-                  icons={icons}
+                  icon={icon}
                   checkLeaf={this.judgeLeaf}
                   checkRoot={this.judgeRoot}
                   onCheck={this.changeCheck}
@@ -251,7 +249,7 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
   private judgeLeaf = (id: number) => {
     const { treeConstructor } = this.state
     const { getNodeByID } = treeConstructor
-    let isLeaf: boolean
+    let isLeaf: boolean = false
     const currentNode = getNodeByID(id)
     if (currentNode && currentNode.children && currentNode.children.length) {
       isLeaf = true
@@ -263,7 +261,7 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
   private judgeRoot(id: number) {
     const { treeConstructor } = this.state
     const { getNodeByID } = treeConstructor
-    let isRoot: boolean
+    let isRoot: boolean = false
     const currentNode = getNodeByID(id)
     isRoot = currentNode.parent_id === -1 ? true : false
     return isRoot

@@ -1,5 +1,4 @@
 import * as React from 'react'
-// import Tree from '../../tree/pages/tree'
 import RctTree from '../../../../index'
 import './index.less'
 interface IState {
@@ -187,7 +186,7 @@ const treeData = [
   }
 ]
 
-export default class Test extends React.Component<IProps, IState> {
+export default class Example extends React.Component<IProps, IState> {
   private tree?: any
   constructor(props: IProps) {
     super(props)
@@ -200,10 +199,7 @@ export default class Test extends React.Component<IProps, IState> {
     }
   }
   public render() {
-    const myConfig = {
-      paddingLeft: '1rem'
-    }
-    const icons = {
+    const icon = {
       parent: <span styleName="rct-icon-directory" />,
       leaf: <span styleName="rct-icon-file" />
     }
@@ -224,10 +220,9 @@ export default class Test extends React.Component<IProps, IState> {
             treeData={treeData}
             showCheckBox={showCheckBox}
             showIcon={showIcon}
-            icons={icons}
+            icon={icon}
             autoExpandAll={autoExpandAll}
             autoCollapseAll={autoCollapseAll}
-            config={myConfig}
             multiple={multiple}
             placeholder={`你想显示什么placeholder？`}
             onSelect={this.onSelect}

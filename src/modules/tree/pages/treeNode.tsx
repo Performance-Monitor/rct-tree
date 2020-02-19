@@ -5,19 +5,19 @@ import { Common } from '../assets'
 import { ITreeNodeParams } from '../lib/type'
 
 const {
-    //  展开 / 收缩图标
+    //  展开/收缩图标
     Arrow,
-    //  checkbox 被选中的图标
+    //  checkbox被选中的图标
     CheckBoxMarked,
-    //  checkbox 未被选中的图标                          
+    //  checkbox未被选中的图标                          
     CheckBoxUnmarked,
-    //  checkbox 被禁用且被选中的图标                          
+    //  checkbox被禁用且被选中的图标                          
     CheckBoxDisabledMarked,
-    //  checkbox 被禁用且未被选中的图标                  
+    //  checkbox被禁用且未被选中的图标                  
     CheckBoxDisabledUnmarked,
-    //  checkbox 为半选状态的图标                
+    //  checkbox为半选状态的图标                
     CheckBoxHalfMarked,
-    //  checkbox 被禁用且为半选状态的图标                      
+    //  checkbox被禁用且为半选状态的图标                      
     CheckBoxDisabledHalfMarked
 } = Common
 /**
@@ -105,7 +105,7 @@ export default class TreeNode extends React.Component<ITreeNodeParams>{
         const {
             showIcon,
             currentNode,
-            icons,
+            icon,
             checkLeaf
         } = this.props
         if (showIcon && currentNode) {
@@ -115,8 +115,8 @@ export default class TreeNode extends React.Component<ITreeNodeParams>{
                 // 遍历搜索图标库
                 if (id && checkLeaf) {
                     // 传入的icon配置
-                    if (icons) {
-                        const { parent, leaf } = icons
+                    if (icon) {
+                        const { parent, leaf } = icon
                         if (checkLeaf(id)) {
                             return parent
                         } else if (!checkLeaf(id)) {
