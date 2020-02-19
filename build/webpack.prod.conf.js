@@ -1,9 +1,6 @@
 var merge = require('webpack-merge')
-var TerserPlugin = require('terser-webpack-plugin')
 var MiniCssExtractPlugin = require('mini-css-extract-plugin')
 var CompressionWebpackPlugin = require('compression-webpack-plugin')
-var OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-
 var utils = require('./utils')
 var config = require('../config')
 var baseWebpackConfig = require('./webpack.base.conf')
@@ -36,21 +33,6 @@ module.exports = merge(baseWebpackConfig, {
 
   optimization: {
     minimizer: [
-      new OptimizeCSSAssetsPlugin({
-        cssProcessorOptions: {
-          map: {
-            inline: false
-          }
-        }
-      }),
-      new TerserPlugin({
-        sourceMap: true,
-        terserOptions: {
-            compress: {
-                drop_console: true
-            }
-        }
-      }),
       new CompressionWebpackPlugin({
         compressionOptions: {
           numiterations: 15

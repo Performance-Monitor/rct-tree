@@ -3,7 +3,6 @@ var path = require('path')
 var HappyPack = require('happypack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ProgressBarPlugin = require('progress-bar-webpack-plugin')
-var ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 var happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
 
 var utils = require('./utils')
@@ -80,9 +79,6 @@ module.exports = {
         }
       ]
     }),
-    new ForkTsCheckerWebpackPlugin({
-      checkSyntacticErrors: true
-    }),
     new HtmlWebpackPlugin({
       title: config.base.title,
       filename: 'index.html',
@@ -90,7 +86,6 @@ module.exports = {
       inject: true
     })
   ],
-
   optimization: {
     splitChunks: {
       chunks: 'async',

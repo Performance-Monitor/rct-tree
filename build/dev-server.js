@@ -36,7 +36,6 @@ var staticPath = path.posix.join(
 )
 app.use(staticPath, express.static('./static'))
 
-console.log('> Starting dev server...')
 webpackDevMiddleware.waitUntilValid(() => {
   console.log(`> Listening at ${config.dev.host}:${config.dev.port} \n`)
 })
