@@ -29,19 +29,18 @@ export default class TreeNode extends React.Component<ITreeNodeParams>{
         super(props)
     }
     public render() {
-        const { currentNode, showIcon } = this.props
+        const { currentNode, showIcon, title, selected, disabled } = this.props
         if (currentNode) {
-            const { title, selected, disabled } = currentNode
             return (
                 <div styleName="tree-node-wrapper">
                     {this.renderCollapse()}
                     {this.renderCheckBox()}
                     <div
-                        styleName={`tree-node ${selected ? "tree-node-left-title" : ""} ${disabled ? "tree-node-left-item-disabled" : ""}`}
+                        styleName={`tree-node ${(selected || currentNode.selected) ? "tree-node-left-title" : ""} ${(disabled || currentNode.disabled) ? "tree-node-left-item-disabled" : ""}`}
                         onClick={this.handleSelect}
                     >
                         {showIcon ? this.renderIcon() : ""}
-                        <span style={showIcon ? { paddingLeft: '.3rem' } : {}}>{title}</span>
+                        <span style={showIcon ? { paddingLeft: '.3rem' } : {}}>{(title || currentNode.title)}</span>
                     </div>
                 </div>
             )
@@ -51,12 +50,11 @@ export default class TreeNode extends React.Component<ITreeNodeParams>{
     * @description 向父组件传入 id ，交给父组件去操作节点展开/收缩
     */
     public renderCollapse = () => {
-        const { currentNode } = this.props
+        const { currentNode, expand } = this.props
         if (currentNode && currentNode.children && currentNode.children.length) {
-            const { expand } = currentNode
             return (
                 <img
-                    styleName={`${expand ? "arrow-down" : "arrow-right"}`}
+                    styleName={`${(expand || currentNode.expand) ? "arrow-down" : "arrow-right"}`}
                     src={Arrow}
                     onClick={this.handleCollapse}
                 />
@@ -78,20 +76,21 @@ export default class TreeNode extends React.Component<ITreeNodeParams>{
     public renderCheckBox = () => {
         const {
             showCheckBox,
-            currentNode
+            currentNode,
+            checked,
+            disabled
         } = this.props
         if (showCheckBox && currentNode) {
-            const { checked, disabled, halfChecked } = currentNode
-
+            const { halfChecked } = currentNode
             let checkboxDisplayComponent, DisabledComponent, NotDisabledComponent, isEmpty, isDisabledEmpty
             isEmpty = halfChecked ? CheckBoxHalfMarked : CheckBoxUnmarked
-            NotDisabledComponent = checked ? CheckBoxMarked : isEmpty
+            NotDisabledComponent = (checked || currentNode.checked) ? CheckBoxMarked : isEmpty
             isDisabledEmpty = halfChecked ? CheckBoxDisabledHalfMarked : CheckBoxDisabledUnmarked
-            DisabledComponent = checked ? CheckBoxDisabledMarked : isDisabledEmpty
-            checkboxDisplayComponent = disabled ? DisabledComponent : NotDisabledComponent
+            DisabledComponent = (checked || currentNode.checked) ? CheckBoxDisabledMarked : isDisabledEmpty
+            checkboxDisplayComponent = (disabled || currentNode.disabled) ? DisabledComponent : NotDisabledComponent
             return (
                 <img
-                    styleName={`tree-node-left-checkbox tree-node-img ${disabled ? "tree-node-left-checkbox-disabled" : ""}`}
+                    styleName={`tree-node-left-checkbox tree-node-img ${(disabled || currentNode.disabled) ? "tree-node-left-checkbox-disabled" : ""}`}
                     src={checkboxDisplayComponent}
                     onClick={this.handleCheck}
                 />

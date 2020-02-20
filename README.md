@@ -207,7 +207,6 @@ export default class Example extends React.Component<IProps, IState> {
 | Property       | type                    | Descript                          | Default    |
 |----------------|-------------------------|-----------------------------------|------------|
 | `title`        | string                  | `可选` 当前节点的标题             | `-`        |
-| `index`        | number                  | `可选` 当前节点所在层级           | `-`        |
 | `expand`       | boolean                 | `可选` 当前节点是否展开           | `true`     |
 | `selected`     | boolean                 | `可选` 当前节点是否被选中         | `false`    |
 | `checked`      | boolean                 | `可选` 当前节点的多选框是否被选中 | `false`    |
@@ -217,8 +216,6 @@ export default class Example extends React.Component<IProps, IState> {
 | `icon`         | IIcon                   | `可选` 传入的自定义icon图标       | `默认图标` |
 | `currentNode`  | ITreeNodeParams         | `可选` 当前节点                   | `-`        |
 | `children`     | ITreeNodeParams[]       | `可选` 子节点                     | `-`        |
-| `checkLeaf`    | (id: number) => boolean | `可选` 当前节点是否为叶子节点     | `false`    |
-| `checkRoot`    | (id: number) => boolean | `可选` 当前节点是否为根节点       | `false`    |
 
 ## IIcon
 | Property | Type            | Description       | Default      |

@@ -58,6 +58,7 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
       let { treeConstructor, visibleData: preData, startIndex: preStartIndex, endIndex: preEndIndex } = this.state
       const { flatData } = treeConstructor
       scrollTop = scrollTop || 0
+      height = height || this.getContentHeight()
       const visibleCount = Math.ceil((height) / (rowHeight || defaultProps.rowHeight))
       const startIndex = Math.floor(scrollTop / (rowHeight || defaultProps.rowHeight))
       const endIndex = startIndex + visibleCount
@@ -244,14 +245,6 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
     }
     return isLeaf
   }
-  private judgeRoot(id: number) {
-    const { treeConstructor } = this.state
-    const { getNodeByID } = treeConstructor
-    let isRoot: boolean = false
-    const currentNode = getNodeByID(id)
-    isRoot = currentNode.parent_id === -1 ? true : false
-    return isRoot
-  }
   public render() {
     const { showCheckBox, placeholder, showIcon, icon, rowHeight, height } = this.props
     const { treeConstructor, visibleData } = this.state
@@ -279,7 +272,6 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
                   showIcon={showIcon}
                   icon={icon}
                   checkLeaf={this.judgeLeaf}
-                  checkRoot={this.judgeRoot}
                   onCheck={this.changeCheck}
                   onSelect={this.changeSelect}
                   onToggleExpand={this.changeExpand}

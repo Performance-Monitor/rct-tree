@@ -9,7 +9,7 @@ export interface ITreeParams {
   //  节点的高度
   rowHeight: number
   //  树的可视高度，设置该属性表示使用虚拟渲染
-  height: number
+  height?: number
   //  是否显示checkbox多选框
   showCheckBox?: boolean
   //  是否显示图标
@@ -74,8 +74,6 @@ export interface ITreeNodeParams {
   onCheck?: (id: number) => void
   //  当前节点是否为叶子节点
   checkLeaf?: (id: number) => boolean
-  //  当前节点是否为根节点
-  checkRoot?: (id: number) => boolean
 }
 
 /**
