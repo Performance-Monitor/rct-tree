@@ -28,11 +28,9 @@
   "author": "jazzyXie",
   "license": "ISC",
   "dependencies": {
-    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-react-jsx": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
     "babel-loader": "^8.0.6",
-    "babel-plugin-import": "^1.13.0",
     "compression-webpack-plugin": "^3.1.0",
     "css-loader": "^2.1.1",
     "express": "^4.17.1",

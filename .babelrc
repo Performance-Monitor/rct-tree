@@ -1,9 +1,7 @@
 {
   "presets": [["@babel/preset-env", { "targets": { "node": "current" } }]],
   "plugins": [
-    "react-hot-loader/babel",
     "@babel/plugin-transform-react-jsx",
-    "@babel/plugin-syntax-dynamic-import",
     [
       "react-css-modules",
       {
@@ -17,25 +15,6 @@
           }
         }
       }
-    ],
-    [
-      "import",
-      {
-        "libraryName": "antd",
-        "libraryDirectory": "es",
-        "style": "css"
-      },
-      "ant"
-    ],
-    [
-      "import",
-      {
-        "libraryName": "ant-design-pro",
-        "libraryDirectory": "lib",
-        "style": "css",
-        "camel2DashComponentName": false
-      },
-      "ant-design-pro"
     ]
   ]
 }

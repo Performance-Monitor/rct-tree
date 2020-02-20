@@ -54,6 +54,8 @@ export interface ITreeNodeParams {
   halfChecked?: boolean
   //  当前节点是否为禁用状态
   disabled?: boolean
+  //  当前节点是否被隐藏
+  hide?: boolean
   //  是否显示当前节点的checkbox
   showCheckBox?: boolean
   //  是否显示当前节点的icon

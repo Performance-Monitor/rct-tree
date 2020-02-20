@@ -6,10 +6,10 @@ import '../style/tree.less'
 
 interface ITreeState {
   treeConstructor: TreeConstructor,
-  scrollTop?: number,
-  visibleData: any[],
+  visibleData: ITreeNodeParams[],
   startIndex?: number,
-  endIndex?: number
+  endIndex?: number,
+  scrollTop?: number,
 }
 
 const defaultProps = {
@@ -32,7 +32,8 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
       treeConstructor: new TreeConstructor(props.treeData),
       visibleData: [],
       startIndex: 0,
-      endIndex: 0
+      endIndex: 0,
+      scrollTop: 0
     }
   }
   public componentDidMount = () => {
@@ -46,6 +47,8 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
   }
   private handleScrollEvent = (target: any) => {
     const { scrollTop } = target
+    let { scrollTop: SCROLLTOP } = this.state
+    SCROLLTOP = scrollTop
     this.updateVisibleData(scrollTop)
   }
   private updateVisibleData = (scrollTop?: number) => {
@@ -55,10 +58,16 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
       let { treeConstructor, visibleData: preData, startIndex: preStartIndex, endIndex: preEndIndex } = this.state
       const { flatData } = treeConstructor
       scrollTop = scrollTop || 0
-      const visibleCount = Math.ceil(height / (rowHeight || defaultProps.rowHeight))
+      const visibleCount = Math.ceil((height) / (rowHeight || defaultProps.rowHeight))
       const startIndex = Math.floor(scrollTop / (rowHeight || defaultProps.rowHeight))
       const endIndex = startIndex + visibleCount
-      const visibleData = flatData.slice(startIndex, endIndex)
+      //  过滤收缩被隐藏的数据
+      let dataAfterFilter = flatData.filter((el: ITreeNodeParams) => {
+        if (!el.hide) {
+          return el
+        }
+      })
+      const visibleData = dataAfterFilter.slice(startIndex, endIndex)
       if (visibleData === preData && startIndex === preStartIndex && endIndex === preEndIndex) {
         return
       }
@@ -78,47 +87,13 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
     let { treeConstructor } = this.state
     let { flatData } = treeConstructor
     let contentHeight = 0
-    contentHeight = (rowHeight || defaultProps.rowHeight) * flatData.length
+    let dataAfterFilter = flatData.filter((el: ITreeNodeParams) => {
+      if (!el.hide) {
+        return el
+      }
+    })
+    contentHeight = (rowHeight || defaultProps.rowHeight) * dataAfterFilter.length
     return contentHeight
-  }
-  public render() {
-    const { showCheckBox, placeholder, showIcon, icon, rowHeight, height } = this.props
-    const { treeConstructor, visibleData } = this.state
-    const { flatData } = treeConstructor
-    if (!flatData || flatData.length == 0) {
-      const placeholderContent = placeholder ? placeholder : '暂无数据'
-      return <div styleName="tree-wrapper">{placeholderContent}</div>
-    }
-    return (
-      <div
-        styleName="tree-wrapper"
-        ref={ref => (this.rctTree = ref)}
-        onScroll={this.onScroll.bind(this)}
-        style={height ? { height } : {}}
-      >
-        <div style={{ height: this.getContentHeight() }}></div>
-        <div ref={ref => (this.treeNodes = ref)} style={{ position: "absolute", top: 0 }}>
-          {visibleData.map((node: ITreeNodeParams) => {
-            const { id, index } = node
-            return (
-              <div style={index ? { paddingLeft: (rowHeight || defaultProps.rowHeight) / 2 * index, height: (rowHeight || defaultProps.rowHeight) } : { height: (rowHeight || defaultProps.rowHeight) }} key={`tree—node-${id}`}>
-                <TreeNode
-                  currentNode={node}
-                  showCheckBox={showCheckBox}
-                  showIcon={showIcon}
-                  icon={icon}
-                  checkLeaf={this.judgeLeaf}
-                  checkRoot={this.judgeRoot}
-                  onCheck={this.changeCheck}
-                  onSelect={this.changeSelect}
-                  onToggleExpand={this.changeExpand}
-                ></TreeNode>
-              </div>
-            )
-          })}
-        </div>
-      </div >
-    )
   }
   private preProcessBeforeRebuild = () => {
     const { autoExpandAll, autoCollapseAll } = this.props
@@ -221,15 +196,25 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
    */
   public changeExpand = (id: number) => {
     const { onToggleExpand } = this.props
-    const { treeConstructor } = this.state
+    const { treeConstructor, scrollTop } = this.state
     let { getNodeByID, toggleLinkage } = treeConstructor
     const nodeItem: ITreeNodeParams = getNodeByID(id)
     nodeItem.expand = !nodeItem.expand
-    toggleLinkage(nodeItem)
+    const childList = toggleLinkage(nodeItem)
+    if (!nodeItem.expand) {
+      childList.map((childID: number) => {
+        getNodeByID(childID).hide = true
+      })
+    } else {
+      childList.map((childID: number) => {
+        getNodeByID(childID).hide = false
+      })
+    }
     this.setState({
       treeConstructor
     })
     onToggleExpand && onToggleExpand(nodeItem)
+    this.updateVisibleData(scrollTop)
   }
   /**
    * @description checkedAll 该方法将设置节点的 checked 字段 全为 true/false (全选/反选)，使用该方法等价于
@@ -266,5 +251,44 @@ export default class Tree extends React.Component<ITreeParams, ITreeState> {
     const currentNode = getNodeByID(id)
     isRoot = currentNode.parent_id === -1 ? true : false
     return isRoot
+  }
+  public render() {
+    const { showCheckBox, placeholder, showIcon, icon, rowHeight, height } = this.props
+    const { treeConstructor, visibleData } = this.state
+    const { flatData } = treeConstructor
+    if (!flatData || flatData.length == 0) {
+      const placeholderContent = placeholder ? placeholder : '暂无数据'
+      return <div styleName="tree-wrapper">{placeholderContent}</div>
+    }
+    return (
+      <div
+        styleName="tree-wrapper"
+        ref={ref => (this.rctTree = ref)}
+        onScroll={this.onScroll.bind(this)}
+        style={height ? { height } : {}}
+      >
+        <div style={{ height: this.getContentHeight() }}></div>
+        <div ref={ref => (this.treeNodes = ref)} style={{ position: "absolute", top: 0 }}>
+          {visibleData.map((node: ITreeNodeParams) => {
+            const { id, index, hide } = node
+            return (!hide &&
+              <div style={index ? { paddingLeft: (rowHeight || defaultProps.rowHeight) / 2 * index, height: (rowHeight || defaultProps.rowHeight) } : { height: (rowHeight || defaultProps.rowHeight) }} key={`tree—node-${id}`}>
+                <TreeNode
+                  currentNode={node}
+                  showCheckBox={showCheckBox}
+                  showIcon={showIcon}
+                  icon={icon}
+                  checkLeaf={this.judgeLeaf}
+                  checkRoot={this.judgeRoot}
+                  onCheck={this.changeCheck}
+                  onSelect={this.changeSelect}
+                  onToggleExpand={this.changeExpand}
+                ></TreeNode>
+              </div>
+            )
+          })}
+        </div>
+      </div >
+    )
   }
 }

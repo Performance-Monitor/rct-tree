@@ -7,8 +7,6 @@ import { ITreeNodeParams } from './type'
 class Tree {
   public flatData: ITreeNodeParams[] = []
   public idCounter: number = 0 //  记录历史上所存在的所有 id 数量
-  public childMap: any = []
-  public childList: any = []
   constructor(treeData: ITreeNodeParams[]) {
     this.PreProcessTreeToFlat(treeData)
   }
@@ -22,6 +20,7 @@ class Tree {
       el.id = ++this.idCounter //  为每一项数据添加id号
       el.halfChecked = false //  默认半选为 false ，halfChecked 触发的前置条件是 checked 为 false
       el.selected = false //  默认 title 不被选中，选中则置为 true
+      el.hide = false
       if (parent_id) {
         el.parent_id = parent_id
       } else {
@@ -132,7 +131,7 @@ class Tree {
    * @description 收缩联动子节点
    */
   toggleLinkage = (currentNode: ITreeNodeParams) => {
-    let childList: any = []
+    let childList: number[] = []
     function pushNode(node: ITreeNodeParams) {
       node && node.children && node.children.forEach((el: any) => {
         childList.push(el.id)
@@ -142,7 +141,7 @@ class Tree {
       })
     }
     pushNode(currentNode)
-    this.childList = childList
+    return childList
   }
   /**
    * @description 联动父子节点
