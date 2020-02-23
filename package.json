@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@hot-loader/react-dom": "^16.11.0",
+    "babel-plugin-react-css-modules": "^5.2.6",
     "progress-bar-webpack-plugin": "^2.1.0",
     "react-hot-loader": "^4.12.19",
     "stylelint": "^13.2.0",
